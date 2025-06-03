@@ -661,10 +661,8 @@ static ncclResult_t scheduleCollTasksToPlan(
 
       size_t nBytes = globalBytesPerElement*task->count;
       devWork->connIndex = 0;
-      if (task->protocol == NCCL_PROTO_SIMPLE && task->algorithm == NCCL_ALGO_RING) {
-        if (comm->useIntraNet && nBytes > rcclParamIntraNetThreshold()) {
-          devWork->connIndex = NCCL_CONN_IDX_P2P_NET;
-        }
+      if (comm->useIntraNet && nBytes > rcclParamIntraNetThreshold()) {
+        devWork->connIndex = NCCL_CONN_IDX_P2P_NET;
       }
 
       uint32_t chunkSize, directFlags=0;
